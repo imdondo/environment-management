@@ -3,7 +3,7 @@ package com.enviro.assessment.senior001.ignasiodondo.carbonemissionsservice.dto;
 public class EmissionResponseDTO {
     private String emissionId;
     private String emissionYear;
-    private String country;
+    private String countryId;
     private String totalEmissions;
     private String coalEmissions;
     private String oilEmissions;
@@ -21,20 +21,19 @@ public class EmissionResponseDTO {
         this.emissionId = emissionId;
     }
 
+    public String getCountryId() {
+        return countryId;
+    }
+
+    public void setCountryId(String countryId) {
+        this.countryId = countryId;
+    }
     public String getEmissionYear() {
         return emissionYear;
     }
 
     public void setEmissionYear(String emissionYear) {
         this.emissionYear = emissionYear;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
     }
 
     public String getTotalEmissions() {

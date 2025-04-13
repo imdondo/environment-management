@@ -1,0 +1,18 @@
+### Create a new emission
+POST http://localhost:8081/api/v1/emissions
+Content-Type: application/json
+
+{
+"emissionYear": "1995",
+"countryId": "123e4567-e89b-12d3-a456-426614174002",
+"totalEmissions": "84.343391",
+"coalEmissions": "0.051302",
+"oilEmissions": "22.239246",
+"gasEmissions": "10.066108",
+"cementEmissions": "1.060089",
+"flaringEmissions": "50.926647",
+"otherEmissions": "0.111",
+"perCapitaEmissions": "0.779603",
+"entryDate": "2025-02-03"
+}
+###

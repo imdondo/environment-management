@@ -7,6 +7,8 @@ import com.enviro.assessment.senior001.ignasiodondo.carbonemissionsservice.excep
 import com.enviro.assessment.senior001.ignasiodondo.carbonemissionsservice.mapper.EmissionsMapper;
 import com.enviro.assessment.senior001.ignasiodondo.carbonemissionsservice.model.Emissions;
 import com.enviro.assessment.senior001.ignasiodondo.carbonemissionsservice.repository.EmissionsRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,6 +18,7 @@ import java.util.UUID;
 @Service
 public class EmissionsService {
 
+    private static final Logger log = LoggerFactory.getLogger(EmissionsService.class);
     private final EmissionsRepository emissionsRepository;
 
     public EmissionsService(EmissionsRepository emissionsRepository) {
@@ -37,7 +40,7 @@ public class EmissionsService {
 
         Emissions newEmission = emissionsRepository.save(
                 EmissionsMapper.toModel(emissionRequestDTO));
-
+log.info("This is the emissionRequest {}", emissionRequestDTO);
 
         return EmissionsMapper.toDTO(newEmission);
     }
@@ -69,7 +72,7 @@ public class EmissionsService {
         return EmissionsMapper.toDTO(updatedEmission);
     }
 
-    public void deletePatient(UUID id) {
+    public void deleteEmission(UUID id) {
         emissionsRepository.deleteById(id);
     }
 }

@@ -20,18 +20,6 @@ public class EmissionRequestDTO {
     @NotBlank(message = "Coal Emissions is required")
     private String coalEmissions;
 
-    public void setCountryId(@NotBlank(message = "country is required") String countryId) {
-        this.countryId = countryId;
-    }
-
-    public @NotBlank(message = "Oil Emissions is required") String getOilEmissions() {
-        return oilEmissions;
-    }
-
-    public void setOilEmissions(@NotBlank(message = "Oil Emissions is required") String oilEmissions) {
-        this.oilEmissions = oilEmissions;
-    }
-
     @NotBlank(message = "Oil Emissions is required")
     private String oilEmissions;
 
@@ -53,13 +41,23 @@ public class EmissionRequestDTO {
             "Entry date is required")
     private String entryDate;
 
-    public @NotBlank(groups = CreateEmissionValidationGroup.class, message =
-            "Entry date is required") String getEntryDate() {
+    public void setCountryId(@NotBlank(message = "country is required") String countryId) {
+        this.countryId = countryId;
+    }
+
+    public @NotBlank(message = "Oil Emissions is required") String getOilEmissions() {
+        return oilEmissions;
+    }
+
+    public void setOilEmissions(@NotBlank(message = "Oil Emissions is required") String oilEmissions) {
+        this.oilEmissions = oilEmissions;
+    }
+
+    public  String getEntryDate() {
         return entryDate;
     }
 
-    public void setEntryDate(@NotBlank(groups = CreateEmissionValidationGroup.class, message =
-            "Entry date is required") String entryDate) {
+    public void setEntryDate( String entryDate) {
         this.entryDate = entryDate;
     }
 
@@ -123,9 +121,6 @@ public class EmissionRequestDTO {
         return UUID.fromString(countryId);
     }
 
-    public void setCountry(@NotBlank(message = "country is required") String country) {
-        this.countryId = country;
-    }
 
     public @NotBlank(message = "EmissionYear is required") @Size(max = 9999, message = "Year cannot exceed 4 digits") String getEmissionYear() {
         return emissionYear;

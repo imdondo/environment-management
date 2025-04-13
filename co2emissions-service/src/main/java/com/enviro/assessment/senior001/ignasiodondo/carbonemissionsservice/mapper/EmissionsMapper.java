@@ -5,18 +5,20 @@ import com.enviro.assessment.senior001.ignasiodondo.carbonemissionsservice.dto.E
 import com.enviro.assessment.senior001.ignasiodondo.carbonemissionsservice.model.Emissions;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 public class EmissionsMapper {
     public static EmissionResponseDTO toDTO(Emissions emissions) {
         EmissionResponseDTO emissionsDTO = new EmissionResponseDTO();
         emissionsDTO.setEmissionId(emissions.getEmissionId().toString());
         emissionsDTO.setEmissionYear((emissions.getEmissionYear()));
+        emissionsDTO.setCountryId((emissions.getCountryId().toString()));
+        emissionsDTO.setTotalEmissions((emissions.getTotalEmissions().toString()));
         emissionsDTO.setCoalEmissions(emissions.getCoalEmissions().toString());
         emissionsDTO.setOilEmissions(emissions.getOilEmissions().toString());
         emissionsDTO.setGasEmissions(emissions.getGasEmissions().toString());
+        emissionsDTO.setCementEmissions(emissions.getCementEmissions().toString());
+        emissionsDTO.setFlaringEmissions(emissions.getFlaringEmissions().toString());
         emissionsDTO.setTotalEmissions(emissions.getTotalEmissions().toString());
-        emissionsDTO.setGasEmissions(emissions.getGasEmissions().toString());
         emissionsDTO.setOtherEmissions(emissions.getOtherEmissions().toString());
         emissionsDTO.setPerCapitaEmissions(emissions.getPerCapitaEmissions().toString());
         return emissionsDTO;
@@ -24,9 +26,8 @@ public class EmissionsMapper {
 
     public static Emissions toModel(EmissionRequestDTO emissionRequestDTO) {
         Emissions emissions = new Emissions();
-        emissions.setEmissionId(emissions.getEmissionId());
         emissions.setEmissionYear(emissionRequestDTO.getEmissionYear());
-        emissions.setCountryId(UUID.fromString(emissionRequestDTO.getCountryId().toString()));
+        emissions.setCountryId((emissionRequestDTO.getCountryId()));
         emissions.setTotalEmissions(Double.valueOf(emissionRequestDTO.getTotalEmissions()));
         emissions.setCoalEmissions(Double.valueOf(emissionRequestDTO.getCoalEmissions()));
         emissions.setOilEmissions(Double.valueOf(emissionRequestDTO.getOilEmissions()));

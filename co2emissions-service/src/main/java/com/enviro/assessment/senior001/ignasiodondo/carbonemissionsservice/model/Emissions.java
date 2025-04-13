@@ -2,12 +2,31 @@ package com.enviro.assessment.senior001.ignasiodondo.carbonemissionsservice.mode
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
+@DynamicUpdate
+@DynamicInsert
 public class Emissions {
+
+    public Emissions(UUID emissionId, String emissionYear, UUID countryId, Double totalEmissions, Double coalEmissions, Double oilEmissions, Double gasEmissions, Double cementEmissions, Double flaringEmissions, Double otherEmissions, Double perCapitaEmissions, LocalDate entryDate) {
+        this.emissionId = emissionId;
+        this.emissionYear = emissionYear;
+        this.countryId = countryId;
+        this.totalEmissions = totalEmissions;
+        this.coalEmissions = coalEmissions;
+        this.oilEmissions = oilEmissions;
+        this.gasEmissions = gasEmissions;
+        this.cementEmissions = cementEmissions;
+        this.flaringEmissions = flaringEmissions;
+        this.otherEmissions = otherEmissions;
+        this.perCapitaEmissions = perCapitaEmissions;
+        this.entryDate = entryDate;
+    }
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -35,6 +54,10 @@ public class Emissions {
     private Double perCapitaEmissions;
     @NotNull
     private LocalDate entryDate;
+
+    public Emissions() {
+
+    }
 
     public @NotNull LocalDate getEntryDate() {
         return entryDate;

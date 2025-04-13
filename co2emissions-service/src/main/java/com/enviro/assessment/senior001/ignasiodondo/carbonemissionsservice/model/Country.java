@@ -12,9 +12,16 @@ import java.util.UUID;
 @Entity
 public class Country {
 
+    public Country(UUID countryId, String name, String code, int UN_M49) {
+        this.countryId = countryId;
+        this.name = name;
+        this.code = code;
+        this.UN_M49 = UN_M49;
+    }
+
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private UUID id;
+    private UUID countryId;
 
     @NotNull
     private String name;
@@ -23,12 +30,16 @@ public class Country {
     @Size(min=1, max=1000)
     private int UN_M49;
 
-    public UUID getId() {
-        return id;
+    public Country() {
+
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public UUID getCountryId() {
+        return countryId;
+    }
+
+    public void setId(UUID countryId) {
+        this.countryId = countryId;
     }
 
     public @NotNull String getName() {
