@@ -28,7 +28,7 @@ public class EmissionsController {
     @GetMapping
     @Operation(summary = "Get Emissions")
     public ResponseEntity<List<EmissionResponseDTO>> getEmissions() {
-        List<EmissionResponseDTO> emissions =emissionsService.getEmissions();
+        List<EmissionResponseDTO> emissions = emissionsService.getEmissions();
         return ResponseEntity.ok().body(emissions);
     }
 
@@ -43,10 +43,19 @@ public class EmissionsController {
         return ResponseEntity.status(HttpStatus.CREATED).body(emissionResponseDTO);
     }
 
+    @GetMapping("/{id}")
+    @Operation(summary = "Get an Emission by Id ")
+    public ResponseEntity<EmissionResponseDTO> getEmissionById(@PathVariable UUID id) {
+
+        EmissionResponseDTO emissionResponseDTO = emissionsService.getEmissionById(id);
+
+        return ResponseEntity.ok().body(emissionResponseDTO);
+    }
+
     @PutMapping("/{id}")
     @Operation(summary = "Update a new Emission")
     public ResponseEntity<EmissionResponseDTO> updateEmission(@PathVariable UUID id,
-                                                            @Validated({Default.class}) @RequestBody EmissionRequestDTO emissionRequestDTO) {
+                                                              @Validated({Default.class}) @RequestBody EmissionRequestDTO emissionRequestDTO) {
 
         EmissionResponseDTO emissionResponseDTO = emissionsService.updateEmission(id,
                 emissionRequestDTO);

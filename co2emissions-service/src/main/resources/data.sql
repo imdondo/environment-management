@@ -1,15 +1,15 @@
 -- Ensure the 'country' table exists
 CREATE TABLE IF NOT EXISTS country
 (
-    countryId              UUID PRIMARY KEY,
+    Id              UUID PRIMARY KEY,
     name            VARCHAR(255)        NOT NULL,
     code           VARCHAR(10) UNIQUE NOT NULL,
     UN_M49         int        NOT NULL,
-    registeredDate DATE      NOT NULL
+    registered_date DATE      NOT NULL
     );
 
 -- Insert well-known UUIDs for specific patients
-INSERT INTO country (countryId, name, code, UN_M49, registeredDate)
+INSERT INTO country (Id, name, code, UN_M49,  registered_date)
 SELECT '123e4567-e89b-12d3-a456-426614174000',
        'South Africa',
        'ZAF',
@@ -17,9 +17,9 @@ SELECT '123e4567-e89b-12d3-a456-426614174000',
        '2025-01-10'
     WHERE NOT EXISTS (SELECT 1
                   FROM country
-                  WHERE countryId = '123e4567-e89b-12d3-a456-426614174000');
+                  WHERE Id = '123e4567-e89b-12d3-a456-426614174000');
 
-INSERT INTO country (countryId, name, code, UN_M49, registeredDate)
+INSERT INTO country (Id, name, code, UN_M49,  registered_date)
 SELECT '123e4567-e89b-12d3-a456-426614174001',
        'Egypt',
        'EGY',
@@ -27,9 +27,9 @@ SELECT '123e4567-e89b-12d3-a456-426614174001',
        '2023-12-01'
     WHERE NOT EXISTS (SELECT 1
                   FROM country
-                  WHERE countryId = '123e4567-e89b-12d3-a456-426614174001');
+                  WHERE Id = '123e4567-e89b-12d3-a456-426614174001');
 
-INSERT INTO country (countryId, name, code, UN_M49, registeredDate)
+INSERT INTO country (Id, name, code, UN_M49,  registered_date)
 SELECT '123e4567-e89b-12d3-a456-426614174002',
        'Nigeria',
        'NGA',
@@ -37,7 +37,7 @@ SELECT '123e4567-e89b-12d3-a456-426614174002',
        '2022-06-20'
     WHERE NOT EXISTS (SELECT 1
                   FROM country
-                  WHERE countryId = '123e4567-e89b-12d3-a456-426614174002');
+                  WHERE Id = '123e4567-e89b-12d3-a456-426614174002');
 
 
 CREATE TABLE IF NOT EXISTS emissions

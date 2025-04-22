@@ -1,6 +1,7 @@
 package com.enviro.assessment.senior001.ignasiodondo.carbonemissionsservice.service;
 
 import com.enviro.assessment.senior001.ignasiodondo.carbonemissionsservice.dto.EmissionRequestDTO;
+import com.enviro.assessment.senior001.ignasiodondo.carbonemissionsservice.dto.CountryResponseDTO;
 import com.enviro.assessment.senior001.ignasiodondo.carbonemissionsservice.dto.EmissionResponseDTO;
 import com.enviro.assessment.senior001.ignasiodondo.carbonemissionsservice.exception.EmissionAlreadyExistsException;
 import com.enviro.assessment.senior001.ignasiodondo.carbonemissionsservice.exception.EmissionNotFoundException;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -29,6 +31,11 @@ public class EmissionsService {
         List<Emissions> emissions = emissionsRepository.findAll();
 
         return emissions.stream().map(EmissionsMapper::toDTO).toList();
+    }
+
+    public EmissionResponseDTO getEmissionById(UUID emissionId) {
+        Optional<Emissions> optionalEmission = emissionsRepository.findById(emissionId);
+        return optionalEmission.map(EmissionsMapper::toDTO).orElse(null);
     }
 
     public EmissionResponseDTO createEmission(EmissionRequestDTO emissionRequestDTO) {

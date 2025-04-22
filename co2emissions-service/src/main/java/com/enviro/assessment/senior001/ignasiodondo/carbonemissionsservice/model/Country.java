@@ -1,45 +1,59 @@
 package com.enviro.assessment.senior001.ignasiodondo.carbonemissionsservice.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
 public class Country {
 
-    public Country(UUID countryId, String name, String code, int UN_M49) {
-        this.countryId = countryId;
+    public Country(UUID Id, String name, String code, int UN_M49, LocalDate registeredDate) {
+        this.Id = Id;
         this.name = name;
         this.code = code;
         this.UN_M49 = UN_M49;
+        this.registeredDate= registeredDate;
     }
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private UUID countryId;
+    @Column(name = "Id")
+    private UUID Id;
 
     @NotNull
+    @Column
     private String name;
     @NotNull
+    @Column
     private String code;
     @Size(min=1, max=1000)
+    @Column
     private int UN_M49;
+    @NotNull
+    @Column(name="registeredDate")
+    private LocalDate registeredDate;
+
+    public LocalDate getRegisteredDate() {
+        return registeredDate;
+    }
+
+    public void setRegisteredDate(LocalDate registeredDate) {
+        this.registeredDate = registeredDate;
+    }
 
     public Country() {
 
     }
 
-    public UUID getCountryId() {
-        return countryId;
+    public UUID getId() {
+        return Id;
     }
 
-    public void setId(UUID countryId) {
-        this.countryId = countryId;
+    public void setId(UUID Id) {
+        this.Id = Id;
     }
 
     public @NotNull String getName() {
