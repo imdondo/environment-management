@@ -9,15 +9,15 @@ import com.enviro.assessment.senior001.ignasiodondo.carbonemissionsservice.model
 import com.enviro.assessment.senior001.ignasiodondo.carbonemissionsservice.repository.EmissionsRepository;
 import com.enviro.assessment.senior001.ignasiodondo.carbonemissionsservice.service.EmissionsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
@@ -39,6 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class EmissionsControllerTest {
 
     @MockitoSpyBean
@@ -149,9 +150,13 @@ UUID emissionsId = UUID.randomUUID();
         emissionsReqList.add(emissionRequest2DTO);
     }
 
-    @AfterEach
+//    @AfterEach
+//    void tearDown() {
+////        emissionsRepository.deleteAll();
+//    }
+    @AfterAll
     void tearDown() {
-//        emissionsRepository.deleteAll();
+        emissionsRepository.deleteAll();
     }
 
     @Test
@@ -288,5 +293,10 @@ UUID emissionsId = UUID.randomUUID();
                 .andDo(print());
 
     }
-
+    @Test
+    @Sql(scripts = {"/data.sql"},
+            config = @SqlConfig(encoding = "utf-8", transactionMode = SqlConfig.TransactionMode.ISOLATED))
+    public void testLoadDataForTestCase() {
+        assertEquals(5, emissionsRepository.findAll().size());
+    }
 }
