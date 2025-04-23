@@ -4,14 +4,12 @@ import com.enviro.assessment.senior001.ignasiodondo.carbonemissionsservice.dto.C
 import com.enviro.assessment.senior001.ignasiodondo.carbonemissionsservice.dto.EmissionRequestDTO;
 import com.enviro.assessment.senior001.ignasiodondo.carbonemissionsservice.dto.CountryResponseDTO;
 import com.enviro.assessment.senior001.ignasiodondo.carbonemissionsservice.dto.EmissionResponseDTO;
-import com.enviro.assessment.senior001.ignasiodondo.carbonemissionsservice.mapper.EmissionsMapper;
 import com.enviro.assessment.senior001.ignasiodondo.carbonemissionsservice.model.Emissions;
 import com.enviro.assessment.senior001.ignasiodondo.carbonemissionsservice.repository.EmissionsRepository;
 import com.enviro.assessment.senior001.ignasiodondo.carbonemissionsservice.service.EmissionsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -42,8 +40,6 @@ class EmissionsControllerTest {
     String token = "";
     @MockitoSpyBean
     EmissionsRepository emissionsRepository;
-    @Mock
-    EmissionsMapper emissionsMapper;
     @MockitoSpyBean
     EmissionsService emissionsService;
     @InjectMocks
@@ -57,9 +53,6 @@ class EmissionsControllerTest {
 
     EmissionRequestDTO emissionsOneReq;
     EmissionResponseDTO emissionsOneRes;
-    EmissionRequestDTO emissionsTwoReq;
-    CountryRequestDTO countryOneReq;
-    CountryResponseDTO countryOneRes;
     List<EmissionRequestDTO> emissionsReqList = new ArrayList<>();
     List<EmissionResponseDTO> emissionsResList = new ArrayList<>();
     UUID emissionsId = UUID.randomUUID();
@@ -196,7 +189,6 @@ class EmissionsControllerTest {
     @Test
     void Should_BeAble_To_UpdateEmissionSuccessfully() throws Exception {
         // Arrange
-        UUID emissionId = emissionsId;
         Emissions newEmission = new Emissions();
         newEmission.setEmissionId(UUID.fromString("d6d85872-05ac-4650-b08e-f3165a196a17"));
         newEmission.setEmissionYear("1995");
@@ -285,9 +277,7 @@ class EmissionsControllerTest {
     @Test
     void addEmissionShouldThrowExceptionForInvalidEmissionName() {
         emissionsOneReq.setCountryId("");
-        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> {
-            emissionsService.createEmission(emissionsOneReq);
-        });
+        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> emissionsService.createEmission(emissionsOneReq));
         assertEquals("Invalid UUID string: ", runtimeException.getMessage());
         verify(emissionsRepository, never()).save(any(Emissions.class));
     }
@@ -296,7 +286,6 @@ class EmissionsControllerTest {
     public void canRetrieveByIdWhenExists() throws Exception {
 
         // Arrange
-        UUID emissionId = emissionsId;
         // Act and Assert
         mockMvc.perform(
                         MockMvcRequestBuilders.get("/api/v1/emissions/" + (emissionsId))
@@ -328,7 +317,6 @@ class EmissionsControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(requestBody)))
                         .andExpect(status().isOk());
-        String resultString = result.andReturn().getResponse().getContentAsString();
-        return resultString;
+        return result.andReturn().getResponse().getContentAsString();
     }
 }
